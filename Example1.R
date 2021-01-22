@@ -1,3 +1,5 @@
+# This is my sample
+
 file <- "TCGA_breast_cancer_LumA_vs_Basal_PAM50.tsv"
 first10 <- c('NAT1','BIRC5','BAG1','BCL2','BLVRA','CCNB1','CCNE1','CDC6','CDC20','CDH3')
 nfold <- 3
@@ -5,11 +7,20 @@ nfold <- 3
 header <- scan(file, nlines = 1, sep="\t", what = character())
 data <- read.table(file, skip = 2, header = FALSE, sep = "\t", quote = "", check.names=FALSE)
 names(data) <- header
-
+names(data)
+View(data)
 header2 <- scan(file, skip = 1, nlines = 1, sep="\t", what = character())
 
+dim(data)
+data$sample_id
+
+data[,c(6)]
+data$sample_id=="BCL2"
 LumA <- data[data$sample_id %in% first10,header2=='Luminal A']
 Basal <- data[data$sample_id %in% first10,header2=='Basal-like']
+
+Luma<-data[header2=="Luminal A"]
+Luma
 
 LumA_groups <- split(colnames(LumA), sample(1:nfold, ncol(LumA), replace=T))
 Basal_groups <- split(colnames(Basal), sample(1:nfold, ncol(Basal), replace=T))
